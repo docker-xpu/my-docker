@@ -4,9 +4,9 @@ import (
 	"fmt"
 	log "github.com/Sirupsen/logrus"
 	"github.com/urfave/cli"
-	"mydocker/cgroups/subsystems"
-	"mydocker/container"
-	"mydocker/network"
+	"my-docker/cgroups/subsystems"
+	"my-docker/container"
+	"my-docker/network"
 	"os"
 )
 

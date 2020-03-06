@@ -1,7 +1,7 @@
 package network
 
 import (
-	"mydocker/container"
+	"my-docker/container"
 	"testing"
 )
 
