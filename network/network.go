@@ -311,6 +311,7 @@ func Connect(networkName string, cinfo *container.ContainerInfo) error {
 		return err
 	}
 
+	// 配置端口映射信息 例如：mydocker run -p 8080:80
 	return configPortMapping(ep, cinfo)
 }
 
