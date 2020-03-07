@@ -14,8 +14,13 @@ func ListContainers() {
 	dirURL := fmt.Sprintf(container.DefaultInfoLocation, "")
 	dirURL = dirURL[:len(dirURL)-1]
 	files, err := ioutil.ReadDir(dirURL)
+
+	w := tabwriter.NewWriter(os.Stdout, 12, 1, 3, ' ', 0)
+	fmt.Fprint(w, "ID\tNAME\tPID\tSTATUS\tCOMMAND\tCREATED\n")
+	w.Flush()
+
 	if err != nil {
-		log.Errorf("Read dir %s error %v", dirURL, err)
+		//log.Errorf("Read dir %s error %v", dirURL, err)
 		return
 	}
 
@@ -32,8 +37,6 @@ func ListContainers() {
 		containers = append(containers, tmpContainer)
 	}
 
-	w := tabwriter.NewWriter(os.Stdout, 12, 1, 3, ' ', 0)
-	fmt.Fprint(w, "ID\tNAME\tPID\tSTATUS\tCOMMAND\tCREATED\n")
 	for _, item := range containers {
 		fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\n",
 			item.Id,

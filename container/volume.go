@@ -36,7 +36,7 @@ func CreateReadOnlyLayer(imageName string) error {
 	}
 	if !exist {
 		if err := os.MkdirAll(unTarFolderUrl, 0622); err != nil {
-			log.Errorf(" .goMkdir %s error %v", unTarFolderUrl, err)
+			log.Errorf("volume.go Mkdir %s error %v", unTarFolderUrl, err)
 			return err
 		}
 
