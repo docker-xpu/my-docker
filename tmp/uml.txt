@@ -1,0 +1,89 @@
+@startuml
+namespace my_docker\\cgroups {
+ class CgroupManager {
+  Path string
+  Resource *subsystems.ResourceConfig
+} 
+}
+namespace my_docker\\cgroups\\subsystems {
+ class CpuSubSystem {
+} 
+}
+namespace my_docker\\cgroups\\subsystems {
+ class CpusetSubSystem {
+} 
+}
+namespace my_docker\\cgroups\\subsystems {
+ class MemorySubSystem {
+} 
+}
+namespace my_docker\\cgroups\\subsystems {
+ class ResourceConfig {
+  MemoryLimit string
+  CpuShare string
+  CpuSet string
+} 
+}
+namespace my_docker\\container {
+ class ContainerInfo {
+  Pid string
+  Id string
+  Name string
+  Command string
+  CreatedTime string
+  Status string
+  Volume string
+  PortMapping []string
+} 
+}
+namespace my_docker\\network {
+ class BridgeNetworkDriver {
+} 
+}
+namespace my_docker\\network {
+ class IPAM {
+  SubnetAllocatorPath string
+  Subnets *map[string]string
+} 
+}
+namespace my_docker\\network {
+ class Endpoint {
+  ID string
+  Device netlink.Veth
+  IPAddress net.IP
+  MacAddress net.HardwareAddr
+  Network *Network
+  PortMapping []string
+} 
+}
+namespace my_docker\\network {
+ class Network {
+  Name string
+  IpRange *net.IPNet
+  Driver string
+} 
+}
+namespace my_docker\\cgroups\\subsystems {
+ interface Subsystem  {
+  Name()string
+  Set(path string,res *ResourceConfig)error
+  Apply(path string,pid int)error
+  Remove(path string)error
+} 
+}
+namespace my_docker\\network {
+ interface NetworkDriver  {
+  Name()string
+  Create(subnet string,name string)(*Network,error)
+  Delete(network Network)error
+  Connect(network *Network,endpoint *Endpoint)error
+  Disconnect(network Network,endpoint *Endpoint)error
+} 
+}
+my_docker\\cgroups.CgroupManager ---> my_docker\\cgroups\\subsystems.ResourceConfig : Resource
+my_docker\\network.Endpoint ---> my_docker\\network.Network : Network
+my_docker\\cgroups\\subsystems.Subsystem <|- my_docker\\cgroups\\subsystems.CpuSubSystem
+my_docker\\cgroups\\subsystems.Subsystem <|- my_docker\\cgroups\\subsystems.CpusetSubSystem
+my_docker\\cgroups\\subsystems.Subsystem <|- my_docker\\cgroups\\subsystems.MemorySubSystem
+my_docker\\network.NetworkDriver <|- my_docker\\network.BridgeNetworkDriver
+@enduml
